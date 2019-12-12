@@ -1,0 +1,56 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Edit Artist{% endblock %}
+{% block content %}
+<div class="form-wrapper">
+  <form class="form" method="post" action="/artists/{{artist.id}}/edit">
+    <h3 class="form-heading">Edit artist <em>{{ artist.name }}</em></h3>
+    <div class="form-group">
+      <label for="name">Name</label>
+      {{ form.name(class_ = 'form-control', value=artist.name) }}
+    </div>
+    <div class="form-group">
+      <label>City & State</label>
+      <div class="form-inline">
+        <div class="form-group">
+          {{ form.city(class_ = 'form-control', value = artist.city, placeholder='City') }}
+        </div>
+        <div class="form-group">
+          {{ form.state(class_ = 'form-control', value = artist.state, placeholder='State') }}
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      {{ form.phone(class_ = 'form-control', value = artist.phone, placeholder='xxx-xxx-xxxx') }}
+    </div>
+    <div class="form-group">
+      <label for="image_link">Image url</label>
+      {{ form.image_link(class_ = 'form-control', value = artist.image_link, placeholder='http://') }}
+    </div>
+    <div class="form-group">
+      <label for="website">Website</label>
+      {{ form.website(class_ = 'form-control', value = artist.website, placeholder='http://') }}
+    </div>
+    <div class="form-group">
+      <label for="genres">Genres</label>
+      <small>Ctrl+Click to select multiple</small>
+      {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas') }}
+    </div>
+    <div class="form-group">
+      <label for="facebook_link">Facebook Link</label>
+      {{ form.facebook_link(class_ = 'form-control', value = artist.facebook_link, placeholder='http://', id=form.state) }}
+    </div>
+    <div class="form-group">
+      <label for="seeking_talent">Seeking talent</label>
+      {{ form.seeking_venue(class_ = 'form-control',
+       **{"onchange":"(() => document.getElementById('description').style.display = 
+       this.value === 'True' ? 'block' : 'none')()"}) }}
+    </div>
+    <div class="form-group" style="{{'display:block' if artist.seeking_venue else 'display:none'}}" id="description">
+      <label for="seeking_description">Seeking talent description</label>
+      {{ form.seeking_description(class_ = 'form-control', value = artist.seeking_venue) }}
+    </div>
+    <input type="submit" value="Edit Artist" class="btn btn-primary btn-lg btn-block">
+  </form>
+</div>
+{% endblock %}
